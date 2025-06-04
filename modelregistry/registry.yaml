@@ -1,0 +1,33 @@
+apiVersion: modelregistry.opendatahub.io/v1alpha1
+kind: ModelRegistry
+metadata:
+  name: demo-registry
+  namespace: rmr
+spec:
+  grpc:
+    port: 9090
+  istio:
+    gateway:
+      grpc:
+        gatewayRoute: enabled
+        port: 443
+        tls:
+          mode: SIMPLE
+      rest:
+        gatewayRoute: enabled
+        port: 443
+        tls:
+          mode: SIMPLE
+    tlsMode: ISTIO_MUTUAL
+  mysql:
+    database: metadb
+    host: prod-registry-db.mlops-databases.svc
+    passwordSecret:
+      key: database-password
+      name: prod-registry-db-zmdls
+    port: 3306
+    skipDBCreation: false
+    username: root
+  rest:
+    port: 8080
+    serviceRoute: disabled
